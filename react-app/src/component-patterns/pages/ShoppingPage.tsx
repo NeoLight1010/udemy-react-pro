@@ -1,12 +1,19 @@
 import React from "react";
-import {
-    ProductButtons,
-    ProductCard,
-    ProductImage,
-    ProductTitle,
-} from "../components";
+import { ProductCard } from "../components";
+import { Product } from "../interfaces/interfaces";
 
 import "../styles/custom-styles.css";
+
+const products: Product[] = [
+    {
+        title: "Coffe Mug",
+        img: "./coffee-mug.png",
+    },
+    {
+        title: "Coffe Mug 2",
+        img: "./coffee-mug2.png",
+    },
+];
 
 export const ShoppingPage: React.FC = () => {
     return (
@@ -21,35 +28,21 @@ export const ShoppingPage: React.FC = () => {
                     flexWrap: "wrap",
                 }}
             >
-                <ProductCard
-                    product={{
-                        title: "Coffe Mug",
-                        img: "./coffee-mug.png",
-                    }}
-                    className="bg-dark"
-                >
-                    <ProductImage className="custom-image" />
-                    <ProductTitle className="text-white" style={{
-                        fontStyle: "oblique",
-                    }} />
-                    <ProductButtons className="custom-buttons" />
-                </ProductCard>
+                {products.map((product) => (
+                    <ProductCard product={product}>
+                        <ProductCard.Image />
+                        <ProductCard.Title className="text-bold" />
+                        <ProductCard.Buttons />
+                    </ProductCard>
+                ))}
+            </div>
 
-                <ProductCard
-                    product={{
-                        title: "Coffe Mug",
-                        img: "./coffee-mug.png",
-                    }}
-
-                    style={{
-                        backgroundColor: "darkcyan",
-                    }}
-                >
+            <div className="shopping-cart">
+                <ProductCard product={products.at(-1)!} style={{
+                    width: "100px",
+                }}>
                     <ProductCard.Image />
-                    <ProductCard.Title className="text-bold" />
-                    <ProductCard.Buttons style={{
-                        color: "white",
-                    }} />
+                    <ProductCard.Buttons />
                 </ProductCard>
             </div>
         </div>

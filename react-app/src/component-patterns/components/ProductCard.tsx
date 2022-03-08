@@ -1,47 +1,72 @@
 import styles from "../styles/styles.module.css";
 import noImage from "../assets/no-image.jpg";
 import React from "react";
-import {useProduct} from "../hooks/useProduct";
-
-interface ProductCardProps {
-    product: Product;
-}
+import { useProduct } from "../hooks/useProduct";
 
 interface Product {
     title: string;
     img?: string;
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({product}) => {
+export const ProductImage = ({ img = "", alt = "" }): JSX.Element => {
+    return (
+        <img
+            className={styles.productImg}
+            src={img || noImage}
+            alt={alt || "Product"}
+        />
+    );
+};
+
+export const ProductTitle = ({
+    title,
+}: {
+    title: Product["title"];
+}): JSX.Element => {
+    return <span className={styles.productDescription}>{title}</span>;
+};
+
+interface ProductButtonsProps {
+    increaseBy: (value: number) => void;
+    counter: number;
+}
+
+export const ProductButtons = ({
+    increaseBy,
+    counter,
+}: ProductButtonsProps): JSX.Element => {
+    return (
+        <div className={styles.buttonsContainer}>
+            <button
+                className={styles.buttonMinus}
+                onClick={() => increaseBy(-1)}
+            >
+                -
+            </button>
+
+            <div className={styles.countLabel}>{counter}</div>
+
+            <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
+                +
+            </button>
+        </div>
+    );
+};
+
+interface ProductCardProps {
+    product: Product;
+}
+
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     const { counter, increaseBy } = useProduct();
 
     return (
         <div className={styles.productCard}>
-            <img
-                className={styles.productImg}
-                src={product.img || noImage}
-                alt={product.title}
-            />
+            <ProductImage img={product.img} alt={product.title} />
 
-            <span className={styles.productDescription}>{product.title}</span>
+            <ProductTitle title={product.title} />
 
-            <div className={styles.buttonsContainer}>
-                <button
-                    className={styles.buttonMinus}
-                    onClick={() => increaseBy(-1)}
-                >
-                    -
-                </button>
-
-                <div className={styles.countLabel}>{counter}</div>
-
-                <button
-                    className={styles.buttonAdd}
-                    onClick={() => increaseBy(1)}
-                >
-                    +
-                </button>
-            </div>
+            <ProductButtons increaseBy={increaseBy} counter={counter} />
         </div>
     );
 };

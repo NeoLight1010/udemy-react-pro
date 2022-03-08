@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { ProductCard } from "../components";
-import { Product } from "../interfaces/interfaces";
+import { OnProductChangeArgs, Product } from "../interfaces/interfaces";
 
 import "../styles/custom-styles.css";
 
@@ -24,6 +24,10 @@ export const ShoppingPage: React.FC = () => {
         [key: string]: ProductInCart;
     }>({});
 
+    const onProductCountChange = ({ product, count }: OnProductChangeArgs) => {
+        console.log(count, product);
+    };
+
     return (
         <div>
             <h1>Shopping Store</h1>
@@ -37,7 +41,11 @@ export const ShoppingPage: React.FC = () => {
                 }}
             >
                 {products.map((product) => (
-                    <ProductCard product={product}>
+                    <ProductCard
+                        product={product}
+                        onChange={onProductCountChange}
+                        key={product.title}
+                    >
                         <ProductCard.Image />
                         <ProductCard.Title className="text-bold" />
                         <ProductCard.Buttons />

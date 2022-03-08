@@ -1,5 +1,10 @@
 import React from "react";
-import { ProductCard } from "../components/ProductCard";
+import {
+    ProductButtons,
+    ProductCard,
+    ProductImage,
+    ProductTitle,
+} from "../components";
 
 export const ShoppingPage: React.FC = () => {
     return (
@@ -14,6 +19,17 @@ export const ShoppingPage: React.FC = () => {
                     flexWrap: "wrap",
                 }}
             >
+                <ProductCard
+                    product={{
+                        title: "Coffe Mug",
+                        img: "./coffee-mug.png",
+                    }}
+                >
+                    <ProductImage />
+                    <ProductTitle />
+                    <ProductButtons />
+                </ProductCard>
+
                 <ProductCard
                     product={{
                         title: "Coffe Mug",

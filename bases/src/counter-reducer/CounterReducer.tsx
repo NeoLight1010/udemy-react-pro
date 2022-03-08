@@ -1,5 +1,6 @@
 import { useReducer } from "react";
 import { CounterProps } from "../bases/Counter";
+import { doIncreaseBy, doReset } from "./actions/actions";
 import { CounterState } from "./interfaces/interfaces";
 import { counterReducer } from "./state/counterReducer";
 
@@ -12,25 +13,18 @@ const INITIAL_STATE: CounterState = {
 export const CounterReducer: React.FC<CounterProps> = () => {
     const [state, dispatch] = useReducer(counterReducer, INITIAL_STATE);
 
-    const handleIncrement = (incrementer: number) => {
-        dispatch({
-            type: "increaseBy",
-            payload: {
-                value: incrementer,
-            },
-        });
+    const handleIncrement = (value: number) => {
+        dispatch(doIncreaseBy(value));
     };
 
     const handleReset = () => {
-        dispatch({
-            type: "reset",
-        });
+        dispatch(doReset());
     };
 
     return (
         <>
             <h1>CounterReducer</h1>
-            <pre>{JSON.stringify(state)}</pre>
+            <pre>{JSON.stringify(state, undefined, 4)}</pre>
 
             <button onClick={() => handleIncrement(1)}>+1</button>
             <button onClick={() => handleIncrement(5)}>+5</button>

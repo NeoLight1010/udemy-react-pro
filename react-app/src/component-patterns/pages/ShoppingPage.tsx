@@ -19,7 +19,11 @@ export const ShoppingPage: React.FC = () => {
                         title: "Coffe Mug",
                         img: "./coffee-mug.png",
                     }}
-                />
+                >
+                    <ProductCard.Image />
+                    <ProductCard.Title />
+                    <ProductCard.Buttons />
+                </ProductCard>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import styles from "../styles/styles.module.css";
 import noImage from "../assets/no-image.jpg";
-import React from "react";
+import { createContext, ReactElement, useContext } from "react";
 import { useProduct } from "../hooks/useProduct";
 
 interface Product {
@@ -8,33 +8,51 @@ interface Product {
     img?: string;
 }
 
-export const ProductImage = ({ img = "", alt = "" }): JSX.Element => {
+interface ProductContextProps {
+    counter: number;
+    increaseBy: (value: number) => void;
+    product: Product;
+}
+
+const ProductContext = createContext<ProductContextProps>(
+    {} as ProductContextProps
+);
+
+const ProductImage = ({ img = "", alt = "" }): JSX.Element => {
+    const { product } = useContext(ProductContext);
+
+    let imageToShow;
+
+    if (img) {
+        imageToShow = img;
+    } else if (product.img) {
+        imageToShow = product.img;
+    } else {
+        imageToShow = noImage;
+    }
+
     return (
         <img
             className={styles.productImg}
-            src={img || noImage}
+            src={imageToShow}
             alt={alt || "Product"}
         />
     );
 };
 
-export const ProductTitle = ({
-    title,
-}: {
-    title: Product["title"];
-}): JSX.Element => {
-    return <span className={styles.productDescription}>{title}</span>;
+const ProductTitle = ({ title }: { title?: Product["title"] }): JSX.Element => {
+    const { product } = useContext(ProductContext);
+
+    return (
+        <span className={styles.productDescription}>
+            {title || product.title}
+        </span>
+    );
 };
 
-interface ProductButtonsProps {
-    increaseBy: (value: number) => void;
-    counter: number;
-}
+const ProductButtons = (): JSX.Element => {
+    const { counter, increaseBy, product } = useContext(ProductContext);
 
-export const ProductButtons = ({
-    increaseBy,
-    counter,
-}: ProductButtonsProps): JSX.Element => {
     return (
         <div className={styles.buttonsContainer}>
             <button
@@ -53,20 +71,34 @@ export const ProductButtons = ({
     );
 };
 
+const { Provider } = ProductContext;
+
 interface ProductCardProps {
     product: Product;
+    children?: ReactElement | ReactElement[];
 }
 
-export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard = ({
+    product,
+    children,
+}: ProductCardProps): JSX.Element => {
     const { counter, increaseBy } = useProduct();
 
     return (
-        <div className={styles.productCard}>
-            <ProductImage img={product.img} alt={product.title} />
+        <Provider value={{ counter, increaseBy, product }}>
+            <div className={styles.productCard}>
+                {children}
+
+                {/*<ProductImage img={product.img} alt={product.title} />
 
             <ProductTitle title={product.title} />
 
-            <ProductButtons increaseBy={increaseBy} counter={counter} />
-        </div>
+            <ProductButtons increaseBy={increaseBy} counter={counter} />*/}
+            </div>
+        </Provider>
     );
 };
+
+ProductCard.Title = ProductTitle;
+ProductCard.Image = ProductImage;
+ProductCard.Buttons = ProductButtons;

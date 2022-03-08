@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { ProductCard } from "../components";
 import { Product } from "../interfaces/interfaces";
 
@@ -15,7 +15,15 @@ const products: Product[] = [
     },
 ];
 
+interface ProductInCart extends Product {
+    count: number;
+}
+
 export const ShoppingPage: React.FC = () => {
+    const [shoppingCart, setShoppingCart] = useState<{
+        [key: string]: ProductInCart;
+    }>({});
+
     return (
         <div>
             <h1>Shopping Store</h1>
@@ -38,9 +46,12 @@ export const ShoppingPage: React.FC = () => {
             </div>
 
             <div className="shopping-cart">
-                <ProductCard product={products.at(-1)!} style={{
-                    width: "100px",
-                }}>
+                <ProductCard
+                    product={products.at(-1)!}
+                    style={{
+                        width: "100px",
+                    }}
+                >
                     <ProductCard.Image />
                     <ProductCard.Buttons />
                 </ProductCard>

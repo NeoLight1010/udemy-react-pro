@@ -1,39 +1,7 @@
-import { Reducer, useReducer } from "react";
-import { CounterProps } from "./Counter";
-
-interface CounterState {
-    counter: CounterProps["initialValue"];
-    previous: CounterProps["initialValue"];
-    changes: number;
-}
-
-type CounterAction =
-    | { type: "increaseBy"; payload: { value: number } }
-    | { type: "reset" };
-
-const counterReducer: Reducer<CounterState, CounterAction> = (
-    state,
-    action
-) => {
-    switch (action.type) {
-        case "reset":
-            return {
-                counter: 0,
-                previous: 0,
-                changes: 0,
-            };
-
-        case "increaseBy":
-            return {
-                counter: (state.counter ?? 0) + action.payload.value,
-                changes: state.changes + 1,
-                previous: state.counter,
-            };
-
-        default:
-            return state;
-    }
-};
+import { useReducer } from "react";
+import { CounterProps } from "../bases/Counter";
+import { CounterState } from "./interfaces/interfaces";
+import { counterReducer } from "./state/counterReducer";
 
 const INITIAL_STATE: CounterState = {
     counter: 0,

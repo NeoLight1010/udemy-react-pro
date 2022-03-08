@@ -6,6 +6,8 @@ import {
     ProductTitle,
 } from "../components";
 
+import "../styles/custom-styles.css";
+
 export const ShoppingPage: React.FC = () => {
     return (
         <div>
@@ -24,10 +26,13 @@ export const ShoppingPage: React.FC = () => {
                         title: "Coffe Mug",
                         img: "./coffee-mug.png",
                     }}
+                    className="bg-dark"
                 >
-                    <ProductImage />
-                    <ProductTitle />
-                    <ProductButtons />
+                    <ProductImage className="custom-image" />
+                    <ProductTitle className="text-white" style={{
+                        fontStyle: "oblique",
+                    }} />
+                    <ProductButtons className="custom-buttons" />
                 </ProductCard>
 
                 <ProductCard
@@ -35,10 +40,16 @@ export const ShoppingPage: React.FC = () => {
                         title: "Coffe Mug",
                         img: "./coffee-mug.png",
                     }}
+
+                    style={{
+                        backgroundColor: "darkcyan",
+                    }}
                 >
                     <ProductCard.Image />
-                    <ProductCard.Title />
-                    <ProductCard.Buttons />
+                    <ProductCard.Title className="text-bold" />
+                    <ProductCard.Buttons style={{
+                        color: "white",
+                    }} />
                 </ProductCard>
             </div>
         </div>

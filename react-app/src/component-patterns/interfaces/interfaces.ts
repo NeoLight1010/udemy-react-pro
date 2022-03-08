@@ -10,8 +10,3 @@ export interface ProductContextProps {
     increaseBy: (value: number) => void;
     product: Product;
 }
-
-export interface ProductCardProps {
-    product: Product;
-    children?: ReactElement | ReactElement[];
-}

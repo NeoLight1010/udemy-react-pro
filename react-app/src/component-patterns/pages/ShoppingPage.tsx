@@ -1,8 +1,6 @@
 import { ProductCard } from "../components";
 import { products } from "../data/products";
 
-import "../styles/custom-styles.css";
-
 const product = products[0];
 
 export const ShoppingPage = (): JSX.Element => {
@@ -19,18 +17,11 @@ export const ShoppingPage = (): JSX.Element => {
                     maxCount: 10,
                 }}
             >
-                {({ reset, increaseBy, reachedMaxCount, count }) => (
+                {() => (
                     <>
                         <ProductCard.Image />
                         <ProductCard.Title className="text-bold" />
                         <ProductCard.Buttons />
-
-                        <button onClick={reset}>Reset</button>
-                        <button onClick={() => increaseBy(-2)}>-2</button>
-                        {!reachedMaxCount && (
-                            <button onClick={() => increaseBy(2)}>+2</button>
-                        )}
-                        <span>{count}</span>
                     </>
                 )}
             </ProductCard>

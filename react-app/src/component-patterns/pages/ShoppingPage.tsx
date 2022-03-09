@@ -25,7 +25,25 @@ export const ShoppingPage: React.FC = () => {
     }>({});
 
     const onProductCountChange = ({ product, count }: OnProductChangeArgs) => {
-        console.log(count, product);
+        setShoppingCart((oldShoppingCart) => {
+            const productInCart: ProductInCart = oldShoppingCart[
+                product.title
+            ] || { ...product, count: 0 };
+
+            const incrementedCount = productInCart.count + count;
+
+            if (Math.max(incrementedCount, 0) > 0) {
+                productInCart.count = incrementedCount;
+
+                return {
+                    ...oldShoppingCart,
+                    [product.title]: productInCart,
+                };
+            }
+
+            const { [product.title]: toDelete, ...rest } = oldShoppingCart;
+            return rest;
+        });
     };
 
     return (
@@ -45,6 +63,7 @@ export const ShoppingPage: React.FC = () => {
                         product={product}
                         onChange={onProductCountChange}
                         key={product.title}
+                        value={shoppingCart[product.title]?.count || 0}
                     >
                         <ProductCard.Image />
                         <ProductCard.Title className="text-bold" />
@@ -54,15 +73,25 @@ export const ShoppingPage: React.FC = () => {
             </div>
 
             <div className="shopping-cart">
-                <ProductCard
-                    product={products.at(-1)!}
-                    style={{
-                        width: "100px",
-                    }}
-                >
-                    <ProductCard.Image />
-                    <ProductCard.Buttons />
-                </ProductCard>
+                {Object.values(shoppingCart).map((product) => (
+                    <ProductCard
+                        key={product.title}
+                        product={product}
+                        style={{
+                            width: "100px",
+                        }}
+                        value={product.count}
+                        onChange={onProductCountChange}
+                    >
+                        <ProductCard.Image />
+                        <ProductCard.Buttons
+                            style={{
+                                display: "flex",
+                                justifyContent: "center",
+                            }}
+                        />
+                    </ProductCard>
+                ))}
             </div>
         </div>
     );

@@ -13,3 +13,7 @@ export interface OnProductChangeArgs {
     product: Product; 
     count: number;
 }
+
+export interface ProductInCart extends Product {
+    count: number;
+}

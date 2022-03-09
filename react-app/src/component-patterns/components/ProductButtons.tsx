@@ -1,5 +1,5 @@
 import styles from "../styles/styles.module.css";
-import { useContext } from "react";
+import { useCallback, useContext } from "react";
 import { ProductContext } from "./ProductCard";
 
 export interface ProductButtonsInterface {
@@ -11,7 +11,12 @@ export const ProductButtons = ({
     className,
     style,
 }: ProductButtonsInterface): JSX.Element => {
-    const { counter, increaseBy } = useContext(ProductContext);
+    const { counter, increaseBy, maxCount } = useContext(ProductContext);
+
+    const reachedMaxCount = useCallback(
+        () => !!maxCount && counter === maxCount,
+        [counter, maxCount]
+    );
 
     return (
         <div
@@ -27,7 +32,14 @@ export const ProductButtons = ({
 
             <div className={styles.countLabel}>{counter}</div>
 
-            <button className={styles.buttonAdd} onClick={() => increaseBy(1)}>
+            {/* TODO: disable dynamically */}
+            <button
+                className={`${styles.buttonAdd} ${
+                    reachedMaxCount() ? styles.disabled : ""
+                }`}
+                onClick={() => increaseBy(1)}
+                disabled={reachedMaxCount()}
+            >
                 +
             </button>
         </div>

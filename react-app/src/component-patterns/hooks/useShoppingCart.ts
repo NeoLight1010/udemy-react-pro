@@ -8,23 +8,15 @@ export const useShoppingCart = () => {
 
     const onProductCountChange = ({ product, count }: OnProductChangeArgs) => {
         setShoppingCart((oldShoppingCart) => {
-            const productInCart: ProductInCart = oldShoppingCart[
-                product.title
-            ] || { ...product, count: 0 };
-
-            const incrementedCount = productInCart.count + count;
-
-            if (Math.max(incrementedCount, 0) > 0) {
-                productInCart.count = incrementedCount;
-
-                return {
-                    ...oldShoppingCart,
-                    [product.title]: productInCart,
-                };
+            if (count === 0) {
+                const { [product.title]: toDelete, ...rest } = oldShoppingCart;
+                return rest;
             }
 
-            const { [product.title]: toDelete, ...rest } = oldShoppingCart;
-            return rest;
+            return {
+                ...oldShoppingCart,
+                [product.title]: {...product, count}
+            };
         });
     };
 

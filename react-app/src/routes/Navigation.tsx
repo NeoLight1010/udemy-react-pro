@@ -6,6 +6,7 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
+import { RegisterPage } from "../forms/pages/RegisterPage";
 import logo from "../logo.svg";
 
 export const Navigation: React.FC = () => {
@@ -23,7 +24,7 @@ export const Navigation: React.FC = () => {
                                     isActive ? "nav-active" : ""
                                 }
                             >
-                                Home
+                                Register
                             </NavLink>
                         </li>
                         <li>
@@ -52,10 +53,10 @@ export const Navigation: React.FC = () => {
                 <Routes>
                     <Route path="about" element={<h1>About Page</h1>}></Route>
                     <Route path="users" element={<h1>Users page</h1>}></Route>
-                    <Route path="/" element={<h1>Home Page</h1>}></Route>
+                    <Route path="/" element={<RegisterPage />}></Route>
                     <Route
                         path="/*"
-                        element={<Navigate to="/home" replace />}
+                        element={<Navigate to="/" replace />}
                     ></Route>
                 </Routes>
             </div>

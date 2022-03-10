@@ -6,6 +6,7 @@ import {
     Route,
     Routes,
 } from "react-router-dom";
+import { FormikBasicPage } from "../forms/pages/FormikBasicPage";
 import { RegisterPage } from "../forms/pages/RegisterPage";
 import logo from "../logo.svg";
 
@@ -19,7 +20,7 @@ export const Navigation: React.FC = () => {
                     <ul>
                         <li>
                             <NavLink
-                                to="/"
+                                to="/register"
                                 className={({ isActive }) =>
                                     isActive ? "nav-active" : ""
                                 }
@@ -29,12 +30,12 @@ export const Navigation: React.FC = () => {
                         </li>
                         <li>
                             <NavLink
-                                to="/about"
+                                to="/formik-basic"
                                 className={({ isActive }) =>
                                     isActive ? "nav-active" : ""
                                 }
                             >
-                                About
+                                Formik Basic
                             </NavLink>
                         </li>
                         <li>
@@ -51,12 +52,15 @@ export const Navigation: React.FC = () => {
                 </nav>
 
                 <Routes>
-                    <Route path="about" element={<h1>About Page</h1>}></Route>
+                    <Route path="register" element={<RegisterPage />}></Route>
+                    <Route
+                        path="formik-basic"
+                        element={<FormikBasicPage />}
+                    ></Route>
                     <Route path="users" element={<h1>Users page</h1>}></Route>
-                    <Route path="/" element={<RegisterPage />}></Route>
                     <Route
                         path="/*"
-                        element={<Navigate to="/" replace />}
+                        element={<Navigate to="register" replace />}
                     ></Route>
                 </Routes>
             </div>

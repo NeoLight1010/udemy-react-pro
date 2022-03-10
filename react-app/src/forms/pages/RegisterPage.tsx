@@ -1,5 +1,6 @@
 import { useForm } from "../hooks/useForm";
 import "../styles/styles.css";
+import {isValidEmail} from "../utils/isValidEmail";
 
 enum InputName {
     Name = "name",
@@ -7,12 +8,6 @@ enum InputName {
     Password = "password",
     ConfirmPassword = "confirmPassword",
 }
-
-const isValidEmail = (email: string) => {
-    const re =
-        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-};
 
 const MIN_PASSWORD_LENGTH = 6;
 
